@@ -5,9 +5,9 @@ TARGETOS := linux #darwin windows linux
 TARGETARCH := arm64 #amd64 386 arm arm64
 
 ifeq ($(shell command -v podman 2> /dev/null),)
-	CONTAINER_CMD="docker buildx"
+CONTAINER_CMD:=docker buildx
 else
-	CONTAINER_CMD=podman
+CONTAINER_CMD:=podman
 endif
 
 format:
