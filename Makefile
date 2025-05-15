@@ -40,7 +40,7 @@ build: format get
 	CGO_ENABLED=0 GOOS=$(TARGETOS) GOARCH=$(TARGETARCH) go build -v -o kbot -ldflags "-X="github.com/monakhovm/kbot/cmd.appVersion=${VERSION}
 
 image:
-	$(BUILDX_CMD) build --platform linux/amd64,linux/arm64 --env TARGETPLATFORM=$(TARGETOS) -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} .
+	$(BUILDX_CMD) build --platform linux/amd64,linux/arm64 -e "TARGETPLATFORM=$(TARGETOS)" -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} .
 
 push:
 	$(CONTAINER_CMD) push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
