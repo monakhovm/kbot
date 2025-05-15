@@ -41,8 +41,8 @@ image:
 	$(CONTAINER_CMD) build --platform linux/amd64,linux/arm64 --env TARGETPLATFORM=$(TARGETOS) -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} .
 
 push:
-	$(CONTAIMER_CMD) push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	$(CONTAINER_CMD) push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
 
 clean:
 	rm -rf kbot
-	podman rmi ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	$(CONTAINER_CMD) rmi ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
