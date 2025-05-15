@@ -1,7 +1,8 @@
-FROM golang:1.24.3 AS builder
+FROM --platform=$BUILDPLATFORM quay.io/projectquay/golang:1.24 AS builder
+ARG TARGETPLATFORM
 WORKDIR /src/go/app
 COPY . .
-RUN make build
+RUN make $TARGETPLATFORM
 
 FROM scratch
 WORKDIR /
