@@ -4,6 +4,12 @@ VERSION := $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short
 TARGETOS := linux #darwin windows linux
 TARGETARCH := arm64 #amd64 386 arm arm64
 
+ifeq ($(shell command -v podman 2> /dev/null),)
+	CONTAINER_CMD="docker buildx"
+else
+	CONTAINER_CMD=podman
+endif
+
 format:
 	gofmt -s -w ./
 
@@ -32,10 +38,10 @@ build: format get
 	CGO_ENABLED=0 GOOS=$(TARGETOS) GOARCH=$(TARGETARCH) go build -v -o kbot -ldflags "-X="github.com/monakhovm/kbot/cmd.appVersion=${VERSION}
 
 image:
-	podman build --platform linux/amd64,linux/arm64 --env TARGETPLATFORM=$(TARGETOS) -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} .
+	$(CONTAINER_CMD) build --platform linux/amd64,linux/arm64 --env TARGETPLATFORM=$(TARGETOS) -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} .
 
 push:
-	podman push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	$(CONTAIMER_CMD) push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
 
 clean:
 	rm -rf kbot
