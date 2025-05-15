@@ -5,9 +5,11 @@ TARGETOS := linux #darwin windows linux
 TARGETARCH := arm64 #amd64 386 arm arm64
 
 ifeq ($(shell command -v podman 2> /dev/null),)
-CONTAINER_CMD:=docker buildx
+CONTAINER_CMD:=docker
+BUILDX_CMD:=docker buildx
 else
 CONTAINER_CMD:=podman
+BUILDX_CMD:=podman
 endif
 
 format:
@@ -38,7 +40,7 @@ build: format get
 	CGO_ENABLED=0 GOOS=$(TARGETOS) GOARCH=$(TARGETARCH) go build -v -o kbot -ldflags "-X="github.com/monakhovm/kbot/cmd.appVersion=${VERSION}
 
 image:
-	$(CONTAINER_CMD) build --platform linux/amd64,linux/arm64 --env TARGETPLATFORM=$(TARGETOS) -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} .
+	$(BUILDX_CMD) build --platform linux/amd64,linux/arm64 --env TARGETPLATFORM=$(TARGETOS) -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} .
 
 push:
 	$(CONTAINER_CMD) push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
