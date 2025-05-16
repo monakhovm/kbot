@@ -3,7 +3,7 @@ ARG TARGETOS
 ARG TARGETARCH
 WORKDIR /src/go/app
 COPY . .
-RUN make image
+RUN make build
 
 FROM scratch
 WORKDIR /
