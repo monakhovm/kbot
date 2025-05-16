@@ -1,8 +1,10 @@
 FROM --platform=$BUILDPLATFORM quay.io/projectquay/golang:1.24 AS builder
-ARG TARGETPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+ARG STEP
 WORKDIR /src/go/app
 COPY . .
-RUN make $TARGETPLATFORM
+RUN make $STEP
 
 FROM scratch
 WORKDIR /
