@@ -6,10 +6,8 @@ TARGETOS ?= linux
 
 ifeq ($(shell command -v podman 2> /dev/null),)
 CONTAINER_CMD:=docker
-BUILDX_CMD:=docker buildx
 else
 CONTAINER_CMD:=podman
-BUILDX_CMD:=podman
 endif
 
 format:
@@ -40,7 +38,7 @@ build: format get
 	CGO_ENABLED=0 GOOS=$(TARGETOS) GOARCH=$(TARGETARCH) go build -v -o kbot -ldflags "-X="github.com/monakhovm/kbot/cmd.appVersion=${VERSION}
 
 image:
-	$(BUILDX_CMD) build -t ${REGISTRY}/${APP}:${VERSION}-$(TARGETARCH) .
+	$(CONTAINER_CMD) build -t ${REGISTRY}/${APP}:${VERSION}-$(TARGETARCH) .
 
 push:
 	$(CONTAINER_CMD) push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
