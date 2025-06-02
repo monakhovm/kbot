@@ -48,7 +48,6 @@ jobs:
             fetch-depth: 0
 
         - run: |
-            git branch
             echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
         - uses: mikefarah/yq@master
