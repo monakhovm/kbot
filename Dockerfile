@@ -10,3 +10,4 @@ WORKDIR /
 COPY --from=builder /src/go/app/kbot /
 COPY --from=alpine:latest /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 ENTRYPOINT ["/kbot"]
+CMD [ "kbot" ]

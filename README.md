@@ -52,7 +52,7 @@ A simple Telegram bot written in Go that generates images from text using the Im
 
 ## Running the Bot
 
-There are two ways to run the bot:
+There are several ways to run the bot:
 
 1.  **Using `go run` (for development):**
     ```
@@ -75,7 +75,25 @@ There are two ways to run the bot:
         # Or simply:
         ./kbot
         ```
-
+3. Using helm:
+    *   If you have Helm installed, you can deploy the bot using the provided Helm chart:
+    - create a `values.yaml` file with your variables:
+        ```yaml
+        image:
+        repository: ghcr.io/monakhovm
+        tag: "<VERSION>"
+        arch: <ARCH> # e.g., amd64, arm64
+        
+        secret:
+        telegram:
+            token: <YOUR_TELEGRAM_BOT_TOKEN>
+        imgbun:
+            token: <YOUR_IMGBUN_API_KEY>
+        ```
+    -   Then, install the bot using Helm:
+        ```bash
+        helm install kbot https://github.com/monakhovm/kbot/releases/download/<RELEASE_VERSION>/kbot-<VERSION>.tgz
+        ```
 Once the bot is running, find it on Telegram using the link provided above and start interacting with it.
 
 ## Usage
