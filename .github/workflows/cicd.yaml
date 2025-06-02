@@ -52,10 +52,9 @@ jobs:
           with:
             cmd: yq -i '.image.tag = strenv(VERSION)' helm/values.yaml
 
-        - env:
-            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          run: |
-            git config user.email github-actions@github.com
-            git config user.name github-actions
+        - run: |
+            # git config user.email github-actions@github.com
+            # git config user.name github-actions
+            git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
             git commit -am "Update image tag to ${VERSION}"
             git push
