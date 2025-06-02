@@ -38,11 +38,11 @@ build: format get
 	CGO_ENABLED=0 GOOS=$(TARGETOS) GOARCH=$(TARGETARCH) go build -v -o kbot -ldflags "-X="github.com/monakhovm/kbot/cmd.appVersion=${VERSION}
 
 image:
-	$(CONTAINER_CMD) build -t ${REGISTRY}/${APP}:${VERSION}-$(TARGETARCH) .
+	$(CONTAINER_CMD) build -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-$(TARGETARCH) .
 
 push:
-	$(CONTAINER_CMD) push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	$(CONTAINER_CMD) push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-$(TARGETARCH)
 
 clean:
 	rm -rf kbot
-	$(CONTAINER_CMD) rmi ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	$(CONTAINER_CMD) rmi ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-$(TARGETARCH)
