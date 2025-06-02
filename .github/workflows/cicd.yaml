@@ -32,7 +32,7 @@ jobs:
         - name: Build and push Docker image
           env:
             APP: "kbot"
-            REGISTRY: ghcr.io/${{ secrets.DOCKER_USERNAME }}
+            REGISTRY: ghcr.io/${{ github.actor }}
           run: make image push
 
     cd:
