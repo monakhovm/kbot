@@ -48,6 +48,7 @@ spec:
         stage('Checkout') {
             steps {
                 git branch: "${env.BRANCH}", url: "${env.REPO}"
+                sh "git config --global --add safe.directory '${env.WORKSPACE}'"
             }
         }
 
