@@ -1,5 +1,20 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: golang
+    image: golang:1.22
+    command:
+    - cat
+    tty: true
+"""
+            defaultContainer 'golang'
+        }
+    }
 
     parameters {
         choice(
