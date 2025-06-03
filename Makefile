@@ -4,10 +4,10 @@ VERSION := $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short
 TARGETARCH ?= amd64
 TARGETOS ?= linux
 
-ifeq ($(shell command -v podman 2> /dev/null),)
-CONTAINER_CMD:=docker
-else
+ifeq ($(shell command -v docker 2> /dev/null),)
 CONTAINER_CMD:=podman
+else
+CONTAINER_CMD:=docker
 endif
 
 format:
@@ -38,10 +38,10 @@ build: format get
 	CGO_ENABLED=0 GOOS=$(TARGETOS) GOARCH=$(TARGETARCH) go build -v -o kbot -ldflags "-X="github.com/monakhovm/kbot/cmd.appVersion=${VERSION}
 
 image:
-	$(CONTAINER_CMD) build -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-$(TARGETARCH) .
+	$(CONTAINER_CMD) build -t ${REGISTRY}/${APP}:v${VERSION}-${TARGETOS}-$(TARGETARCH) .
 
 push:
-	$(CONTAINER_CMD) push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-$(TARGETARCH)
+	$(CONTAINER_CMD) push ${REGISTRY}/${APP}:v${VERSION}-${TARGETOS}-$(TARGETARCH)
 
 clean:
 	rm -rf kbot
