@@ -8,7 +8,7 @@ replicaCount: 1
 image:
   registry: "ghcr.io"
   repository: "monakhovm/kbot"
-  tag: "1.0.15-43d5ea6"
+  tag: "1.0.15-bea6fd8"
   os: linux
   arch: amd64
 secret:
