@@ -39,7 +39,7 @@ push:
 
 helmchart:
 	helm package --version ${HELM_VERSION} --destination ./helm helm
-	helm push ./helm/kbot-${HELM_VERSION}.tgz oci://ghcr.io/monakhovm/charts
+	helm push ./helm/kbot-${HELM_VERSION}.tgz oci://${REGISTRY}/charts
 
 clean:
 	rm -rf kbot

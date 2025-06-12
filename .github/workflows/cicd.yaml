@@ -54,7 +54,19 @@ jobs:
           with:
             cmd: | 
               yq -i '.image.tag = "v" + strenv(VERSION)' helm/values.yaml
-              make helmchart
+        
+        - name: Log in to Docker Hub
+          uses: docker/login-action@v1
+          with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.GH_TOKEN }}
+    
+        - name: Package and Push Helm chart
+          env:
+            APP: "kbot"
+            REGISTRY: ghcr.io/${{ github.actor }}
+          run: make helmchart
 
         - run: |
             git config user.email github-actions@github.com
