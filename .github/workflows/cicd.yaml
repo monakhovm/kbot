@@ -44,11 +44,9 @@ jobs:
         steps:
         - name: Checkout code
           uses: actions/checkout@v3
-          with:
-            fetch-depth: 0
 
         - run: |
-            echo "VERSION=v$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+            echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
         - uses: mikefarah/yq@master
           with:
@@ -73,5 +71,5 @@ jobs:
             git config user.email github-actions@github.com
             git config user.name github-actions
             git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
-            git commit -am "Update image tag to v${VERSION}"
+            git commit -am "Update image tag to ${VERSION}"
             git push
