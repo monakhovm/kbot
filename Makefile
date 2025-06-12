@@ -1,14 +1,13 @@
 APP := $(shell basename $(shell git remote get-url origin) | cut -d. -f1)
-REGISTRY := ghcr.io/monakhovm
+REGISTRY = ghcr.io/monakhovm
 VERSION := $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
+SHORT_VERSION := $(shell git describe --tags --abbrev=0)
+HELM_VERSION ?= $(shell cat helm/Chart.yaml | grep version | grep -oP '\d+\.\d+\.\d+')
 TARGETARCH ?= amd64
 TARGETOS ?= linux
 
 format:
 	gofmt -s -w ./
-
-lint:
-	golint
 
 test:
 	go test -v
@@ -32,10 +31,15 @@ build: format get
 	CGO_ENABLED=0 GOOS=$(TARGETOS) GOARCH=$(TARGETARCH) go build -v -o kbot -ldflags "-X="github.com/monakhovm/kbot/cmd.appVersion=${VERSION}
 
 image:
-	docker build -t ${REGISTRY}/${APP}:v${VERSION}-${TARGETOS}-$(TARGETARCH) .
+	docker build -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-$(TARGETARCH) .
 
 push:
-	docker push ${REGISTRY}/${APP}:v${VERSION}-${TARGETOS}-$(TARGETARCH)
+	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-$(TARGETARCH)
+	yq -yi '.image.tag = "${VERSION}"' ./helm/values.yaml
+
+helmchart:
+	helm package --version ${HELM_VERSION} --destination ./helm helm
+	helm push ./helm/kbot-${HELM_VERSION}.tgz oci://ghcr.io/monakhovm/charts
 
 clean:
 	rm -rf kbot
