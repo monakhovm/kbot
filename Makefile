@@ -35,7 +35,7 @@ image:
 
 push:
 	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-$(TARGETARCH)
-	yq -yi '.image.tag = "${VERSION}"' ./helm/values.yaml
+	yq -i '.image.tag = "${VERSION}"' ./helm/values.yaml
 
 helmchart:
 	helm package --version ${HELM_VERSION} --destination ./helm helm
