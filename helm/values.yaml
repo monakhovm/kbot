@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   registry: ghcr.io
   repository: monakhovm
-  tag: v1.0.15-68ad89a
+  tag: v1.0.15-b2f9b14
   os: linux
   arch: amd64
 secret:
