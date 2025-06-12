@@ -3,10 +3,10 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - develop
+      - main
   pull_request:
     branches:
-      - develop
+      - main
 
 jobs:
     ci:
@@ -52,7 +52,9 @@ jobs:
 
         - uses: mikefarah/yq@master
           with:
-            cmd: yq -i '.image.tag = "v" + strenv(VERSION)' helm/values.yaml
+            cmd: | 
+              yq -i '.image.tag = "v" + strenv(VERSION)' helm/values.yaml
+              make helmchart
 
         - run: |
             git config user.email github-actions@github.com
