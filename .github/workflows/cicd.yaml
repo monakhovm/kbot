@@ -52,6 +52,7 @@ jobs:
           with:
             cmd: | 
               yq -i '.image.tag = strenv(VERSION)' helm/values.yaml
+              echo ${VERSION}
 
         - name: Log in to Docker Hub
           uses: docker/login-action@v1
