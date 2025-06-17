@@ -49,7 +49,7 @@ jobs:
 
         - run: |
             echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-            echo "IAMGE_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+            echo "IMAGE_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
             echo $IMAGE_TAG : $VERSION
 
