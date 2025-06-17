@@ -38,7 +38,7 @@ push:
 	yq -i '.image.tag = "${VERSION}"' ./helm/values.yaml
 
 helmchart:
-	helm package --version ${HELM_VERSION} --destination ./helm helm
+	helm package --version ${HELM_VERSION} --app-version ${HELM_VERSION}--destination ./helm helm
 	helm push ./helm/kbot-${HELM_VERSION}.tgz oci://${REGISTRY}/charts
 
 clean:
