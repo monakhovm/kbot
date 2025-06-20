@@ -48,10 +48,14 @@ jobs:
             fetch-depth: 0
 
         - run: |
-            echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-            echo "IMAGE_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+            IMAGE_TAG=$(git describe --tags --abbrev=0)
+            VERSION="${IMAGE_TAG}-$(git rev-parse --short HEAD)"
 
-            echo $IMAGE_TAG : $VERSION
+            echo "Generated IMAGE_TAG: ${IMAGE_TAG}"
+            echo "Generated VERSION: ${VERSION}"
+
+            echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+            echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
         - uses: mikefarah/yq@master
           with:
