@@ -1,7 +1,7 @@
-APP := $(shell basename $(shell git remote get-url origin) | cut -d. -f1)
-REGISTRY = ghcr.io/monakhovm
-VERSION := $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
-SHORT_VERSION := $(shell git describe --tags --abbrev=0)
+APP ?= $(shell basename $(shell git remote get-url origin) | cut -d. -f1)
+REGISTRY ?= ghcr.io/monakhovm
+VERSION ?= $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
+SHORT_VERSION ?= $(shell git describe --tags --abbrev=0)
 HELM_VERSION ?= $(shell cat helm/Chart.yaml | grep version | grep -oP '\d+\.\d+\.\d+')
 TARGETARCH ?= amd64
 TARGETOS ?= linux
