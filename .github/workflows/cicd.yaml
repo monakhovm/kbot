@@ -59,10 +59,10 @@ jobs:
 
         - uses: mikefarah/yq@master
           with:
-            cmd: | 
-              # yq -i '.image.tag = strenv(VERSION)' helm/values.yaml
+            cmd: |
               yq -i '.version = strenv(IMAGE_TAG)' helm/Chart.yaml
               yq -i '.appVersion = strenv(IMAGE_TAG)' helm/Chart.yaml
+              yq -i '.image.tag = strenv(VERSION)' helm/values.yaml
 
         - name: Log in to Docker Hub
           uses: docker/login-action@v1
