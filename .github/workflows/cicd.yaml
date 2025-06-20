@@ -63,6 +63,7 @@ jobs:
               yq -i '.version = strenv(IMAGE_TAG)' helm/Chart.yaml
               yq -i '.appVersion = strenv(IMAGE_TAG)' helm/Chart.yaml
               cat helm/Chart.yaml
+              
               yq -i '.image.tag = strenv(VERSION)' helm/values.yaml
               cat helm/values.yaml
 
