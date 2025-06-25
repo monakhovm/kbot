@@ -1,26 +1,20 @@
-# Default values for helm.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
-# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  registry: "ghcr.io"
-  repository: "monakhovm/kbot"
-  tag: "v1.0.15-8d773c6"
+  registry: ghcr.io
+  repository: monakhovm
+  tag: v1.0.16-e53d3cc
   os: linux
   arch: amd64
 secret:
   telegram:
     name: telegram
     tokenKey: telegram_token
-    token: ""
+    token: ''
     envName: TELE_TOKEN
   imgbun:
     name: imgbun
     tokenKey: imgbun_token
-    token: ""
+    token: ''
     envName: IMGBUN_API_KEY
 service:
   port: 80
